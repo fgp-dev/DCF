@@ -1,0 +1,22 @@
+# Experimental design for the second pass
+
+The primary outcome is discovery of Equation (2) witnesses per distinct target execution. We run 30 deterministic seed indices for each target, policy, and budget in `{32,64,128,192}`. The paper's seed formula is `12345 + 1009×trial + k`, with `k=0,1,2` for DCF, random mutation and uniform. Each ablation uses its corresponding parent policy's offset. Each policy sees only its own observations. Every run executes exactly the budgeted number of distinct inputs. All policy paths are warmed before timing and policy order rotates across trials.
+
+The primary comparison is paper `dcf` versus paper `random` on `and3`. The `uniform` sampler is a second paper baseline. Because DCF schedules quartets while random uses 1–3 bit mutations, this comparison measures complete search policies. `fixed_parent` holds quartet construction fixed while suppressing discoverer-parent selection. `mutation_feedback` holds the mutation operator fixed while changing only parent selection to the discoverer corpus; it is an exploratory ablation. These comparisons do not isolate every implementation detail of feedback.
+
+Both paper policies begin from an all-zero seed, but DCF can use that seed as an unexecuted corpus parent, whereas random executes zero as its first observation. This difference is part of the specified algorithms and a remaining confound in a complete-policy comparison. There is no target timeout because these finite in-process functions terminate on every input; the absence of a timeout is identical for every policy.
+
+| Target | Structure and reason | Reference set | Expected control |
+|---|---|---|---|
+| `and3` | Three independent pairs of AND gates and two distractor bits; paper reproduction | `(0,1),(2,3),(4,5)` | Manual and exhaustive equality; no false pairs |
+| `independent` | Outputs from bits 1,3,5 only | Empty | No conditional pair despite output changes |
+| `constant` | Output always zero | Empty | Zero dependencies and one behavior |
+| `direct` | Output is low three input bits | Empty | Many behaviors, zero conditional pairs |
+| `nested_bug` | Three-way AND, separate pair, and an observable bug on bits 0–4 all one | Four pairs by exhaustive enumeration | Tests overlapping input condition and bug discovery |
+| `rare_bug` | AND on bits 0–1 and a bug only at input 255 | 28 pairs by exhaustive enumeration | Tests rare event, sparse witness context and possible random advantage |
+
+The evaluator enumerates each complete eight-bit domain before benchmark runs, checks the expected edge count, and computes the reference edge set. This reference is used for validation and denominators only. `run` receives only the target oracle; no oracle internals or reference edges flow into search. The bug classifier reads an observable outcome bit after each execution. A bug can affect the edge set because crash classification is part of the paper's outcome space; bugs and dependencies are still counted separately.
+
+Per-execution CSV records the right-continuous discovery curve after each query. The normalized area is the sum of observed edge counts after executions 1 through B, divided by `B×|E_ref|`. For zero-edge controls, coverage ratio and area are undefined and encoded as `-1`. `half_coverage_execution` is the first query reaching `ceil(|E_ref|/2)`. A blank first-bug or half-coverage time means the event was not reached before the budget; success rates always use all 30 runs. Whole-run time includes scheduling, oracle evaluation, detector work, and progress recording. Target and detector timings are separately sampled around those calls; residual time includes mutation, scheduling, lookup, and bookkeeping. Throughput is budget divided by whole-run time. The synthetic oracle is so cheap that timings are exploratory and may vary with hardware and host load.
+
+Results are reported as complete distributions: mean, median, sample standard deviation, range, and a normal 95% interval for the mean across randomized trials on each fixed target. Bug and half-coverage success fractions additionally receive Wilson 95% intervals. These intervals are not confidence across target programs. Negative results and all censored runs remain in the raw CSV. The protocol tests dependency discovery, observable behaviors, bugs, wall time, and throughput as different outcomes; it does not assume that improving one improves another.

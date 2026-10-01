@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="510" viewBox="0 0 900 510">
+<rect width="900" height="510" fill="white"/>
+<text x="450" y="27" text-anchor="middle" font-size="17" font-family="sans-serif">direct: throughput</text>
+<path d="M 82 48 V 420 H 780" fill="none" stroke="black"/>
+<path d="M 82.0 420 v 5" stroke="black"/>
+<text x="82.0" y="443" text-anchor="middle" font-size="11">0.0</text>
+<path d="M 82 420.0 H 780" stroke="#ddd"/>
+<text x="73" y="424.0" text-anchor="end" font-size="11">0.00</text>
+<path d="M 221.6 420 v 5" stroke="black"/>
+<text x="221.6" y="443" text-anchor="middle" font-size="11">1.0</text>
+<path d="M 82 345.6 H 780" stroke="#ddd"/>
+<text x="73" y="349.6" text-anchor="end" font-size="11">190784.03</text>
+<path d="M 361.2 420 v 5" stroke="black"/>
+<text x="361.2" y="443" text-anchor="middle" font-size="11">2.0</text>
+<path d="M 82 271.2 H 780" stroke="#ddd"/>
+<text x="73" y="275.2" text-anchor="end" font-size="11">381568.06</text>
+<path d="M 500.8 420 v 5" stroke="black"/>
+<text x="500.8" y="443" text-anchor="middle" font-size="11">3.0</text>
+<path d="M 82 196.8 H 780" stroke="#ddd"/>
+<text x="73" y="200.8" text-anchor="end" font-size="11">572352.08</text>
+<path d="M 640.4 420 v 5" stroke="black"/>
+<text x="640.4" y="443" text-anchor="middle" font-size="11">4.0</text>
+<path d="M 82 122.4 H 780" stroke="#ddd"/>
+<text x="73" y="126.4" text-anchor="end" font-size="11">763136.11</text>
+<path d="M 780.0 420 v 5" stroke="black"/>
+<text x="780.0" y="443" text-anchor="middle" font-size="11">5.0</text>
+<path d="M 82 48.0 H 780" stroke="#ddd"/>
+<text x="73" y="52.0" text-anchor="end" font-size="11">953920.14</text>
+<polyline points="221.6,85.2" fill="none" stroke="#1769aa" stroke-width="2.5"/>
+<text x="788" y="48" font-size="11" fill="#1769aa">dcf</text>
+<circle cx="221.6" cy="85.2" r="6" fill="#1769aa"/>
+<polyline points="361.2,81.8" fill="none" stroke="#7b2cbf" stroke-width="2.5"/>
+<text x="788" y="66" font-size="11" fill="#7b2cbf">fixed_parent</text>
+<circle cx="361.2" cy="81.8" r="6" fill="#7b2cbf"/>
+<polyline points="500.8,265.4" fill="none" stroke="#bc5090" stroke-width="2.5"/>
+<text x="788" y="84" font-size="11" fill="#bc5090">mutation_feedback</text>
+<circle cx="500.8" cy="265.4" r="6" fill="#bc5090"/>
+<polyline points="640.4,115.5" fill="none" stroke="#c45100" stroke-width="2.5"/>
+<text x="788" y="102" font-size="11" fill="#c45100">random</text>
+<circle cx="640.4" cy="115.5" r="6" fill="#c45100"/>
+<polyline points="780.0,95.8" fill="none" stroke="#40916c" stroke-width="2.5"/>
+<text x="788" y="120" font-size="11" fill="#40916c">uniform</text>
+<circle cx="780.0" cy="95.8" r="6" fill="#40916c"/>
+<text x="450" y="485" text-anchor="middle" font-size="13">Fuzzer index (alphabetical legend)</text>
+<text transform="translate(18 230) rotate(-90)" text-anchor="middle" font-size="13">Mean executions / second</text>
+</svg>

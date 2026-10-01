@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="460" viewBox="0 0 760 460">
+<rect width="760" height="460" fill="white"/>
+<text x="380" y="26" text-anchor="middle" font-family="sans-serif" font-size="18">Interaction discovery by execution budget</text>
+<path d="M 75 50 V 370 H 670" fill="none" stroke="black"/>
+<path d="M 70 370.0 H 670" stroke="#dddddd"/>
+<text x="65" y="375.0" text-anchor="end" font-family="sans-serif" font-size="13">0</text>
+<path d="M 70 263.3 H 670" stroke="#dddddd"/>
+<text x="65" y="268.3" text-anchor="end" font-family="sans-serif" font-size="13">1</text>
+<path d="M 70 156.7 H 670" stroke="#dddddd"/>
+<text x="65" y="161.7" text-anchor="end" font-family="sans-serif" font-size="13">2</text>
+<path d="M 70 50.0 H 670" stroke="#dddddd"/>
+<text x="65" y="55.0" text-anchor="end" font-family="sans-serif" font-size="13">3</text>
+<path d="M 75.0 370 V 375" stroke="black"/>
+<text x="75.0" y="393" text-anchor="middle" font-family="sans-serif" font-size="13">32</text>
+<path d="M 194.0 370 V 375" stroke="black"/>
+<text x="194.0" y="393" text-anchor="middle" font-family="sans-serif" font-size="13">64</text>
+<path d="M 313.0 370 V 375" stroke="black"/>
+<text x="313.0" y="393" text-anchor="middle" font-family="sans-serif" font-size="13">96</text>
+<path d="M 432.0 370 V 375" stroke="black"/>
+<text x="432.0" y="393" text-anchor="middle" font-family="sans-serif" font-size="13">128</text>
+<path d="M 670.0 370 V 375" stroke="black"/>
+<text x="670.0" y="393" text-anchor="middle" font-family="sans-serif" font-size="13">192</text>
+<polyline points="75.0,183.8 194.0,53.7 313.0,50.0 432.0,50.0 670.0,50.0" fill="none" stroke="#1976d2" stroke-width="3"/>
+<circle cx="75.0" cy="183.8" r="4" fill="#1976d2"/>
+<circle cx="194.0" cy="53.7" r="4" fill="#1976d2"/>
+<circle cx="313.0" cy="50.0" r="4" fill="#1976d2"/>
+<circle cx="432.0" cy="50.0" r="4" fill="#1976d2"/>
+<circle cx="670.0" cy="50.0" r="4" fill="#1976d2"/>
+<path d="M 535 55 H 560" stroke="#1976d2" stroke-width="3"/>
+<text x="570" y="60" font-family="sans-serif" font-size="13">depcover</text>
+<polyline points="75.0,310.2 194.0,154.1 313.0,60.9 432.0,50.1 670.0,50.0" fill="none" stroke="#ef6c00" stroke-width="3"/>
+<circle cx="75.0" cy="310.2" r="4" fill="#ef6c00"/>
+<circle cx="194.0" cy="154.1" r="4" fill="#ef6c00"/>
+<circle cx="313.0" cy="60.9" r="4" fill="#ef6c00"/>
+<circle cx="432.0" cy="50.1" r="4" fill="#ef6c00"/>
+<circle cx="670.0" cy="50.0" r="4" fill="#ef6c00"/>
+<path d="M 535 78 H 560" stroke="#ef6c00" stroke-width="3"/>
+<text x="570" y="83" font-family="sans-serif" font-size="13">mutation</text>
+<polyline points="75.0,365.9 194.0,303.4 313.0,141.0 432.0,53.5 670.0,50.0" fill="none" stroke="#388e3c" stroke-width="3"/>
+<circle cx="75.0" cy="365.9" r="4" fill="#388e3c"/>
+<circle cx="194.0" cy="303.4" r="4" fill="#388e3c"/>
+<circle cx="313.0" cy="141.0" r="4" fill="#388e3c"/>
+<circle cx="432.0" cy="53.5" r="4" fill="#388e3c"/>
+<circle cx="670.0" cy="50.0" r="4" fill="#388e3c"/>
+<path d="M 535 101 H 560" stroke="#388e3c" stroke-width="3"/>
+<text x="570" y="106" font-family="sans-serif" font-size="13">uniform</text>
+<text x="375" y="431" text-anchor="middle" font-family="sans-serif" font-size="14">Distinct target executions</text>
+<text transform="translate(20 215) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="14">Mean true interactions found</text>
+</svg>

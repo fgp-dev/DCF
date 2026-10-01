@@ -1,0 +1,28 @@
+# Critical analysis of the recorded run
+
+This analysis uses [`benchmark.csv`](benchmark.csv), generated with GCC 13.3.0, C++20, Release (`-O3 -DNDEBUG`), base seed 12345, 1,000 trials at every paper budget, and 30 trials for each extra condition. [`summary.md`](summary.md) is generated directly from that CSV. All values below describe this machine and these synthetic oracles.
+
+## Hypothesis decisions
+
+| Hypothesis | Decision | Evidence and limit |
+|---|---|---|
+| H1: exact detector on the positive and independent-output controls | **Supported by these experiments** | Exhaustive execution of 256 inputs returned exactly `(0,1),(2,3),(4,5)` for Eq. (4), zero for independent outputs, and zero for XOR under Eq. (2). Unit tests also check hand-computed quartets and context matching. This validates these oracles, not all possible programs. |
+| H2: guided policy discovers more true edges per distinct execution at budgets 32 and 64 | **Supported by these experiments** | At budget 64, means were 2.965/3 (guided), 2.024/3 (mutation), and 0.624/3 (uniform). Independent-stream mean differences were 0.941 [0.890, 0.992] and 2.341 [2.296, 2.386] (normal 95% CIs). At 32, means were 1.746, 0.561, 0.038. All 1,000 trials per cell are in the CSV. |
+| H3: advantage vanishes when the small domain saturates | **Supported by these experiments** | At budget 192, every one of the 1,000 trials for each method found all three edges. This is saturation in a 256-input domain, not evidence of equal performance at larger dimensions. |
+| H4: interesting-input corpus feedback itself improves discovery | **Inconclusive** | In the first 30 seeds, the fixed-zero-parent ablation found mean 1.833 vs guided 1.900 at budget 32; at 64 it found 3.000 vs guided 2.967. These small and opposing differences do not isolate a reliable benefit on this easy target. |
+| H5: cost grows with dimension | **Supported by these experiments**, descriptively | At budget 64, guided mean full-run time rose from 130.3 µs (8 bits) to 209.8 µs (10) and 310.3 µs (12); pair checks are exactly `B*n*(n-1)/2`. At the same budget, guided mean detected edges were 3.000/3, 2.867/4, 1.933/5 in the 30-seed scaling runs. This does not establish an asymptotic empirical law beyond 8–12 bits. |
+| H6: no hallucinated edges on independent outputs | **Supported by these experiments** | All 90 budget-64 control trials found zero edges, and exhaustive validation found zero. A random truth table would *not* be an appropriate no-edge control because it can contain real Eq. (2) witnesses. |
+
+## Comparison to the paper
+
+The paper reports budget-64 means of 2.960, 2.007, and 0.655. This implementation obtained 2.965, 2.024, and 0.624. The differences are small relative to trial variability; bitwise reproduction is impossible without the referenced Python script, which was absent from the supplied folder. C++ uses `mt19937_64`, and the exact proposal and shuffle streams therefore differ. The finding is consistent with the paper's narrow claim, but does not validate its specific random trial sequence.
+
+All policies use the same detector, distinct-target-execution budgets, and an oracle that never exposes reference edges to the policy. The benchmark checks exact observation count and zero unexpected edges on structured oracles. The CSV has 15,990 unique trial rows, no budget violations, no positive-oracle false edges, and no negative-control detections. The exhaustive oracle runs are separate from every budgeted run; no observations are reused. Unit tests check fixed-seed replay.
+
+## Time, memory, and limitations
+
+The full-run mean at budget 64 was 131.4 µs for guided, 142.5 µs for mutation, and 144.6 µs for uniform on this machine. These times include policy setup, candidate generation, bookkeeping, and oracle calls. The synthetic oracle is very cheap, so they are not evidence that DepCover is faster for real targets. The mutation baseline made 81.0 proposals on average for 64 target executions; guided made 104.2; uniform made 64.0. This work is counted in time but not in the target-execution budget, as in the paper. The uniform baseline additionally stores a 2,048-byte domain permutation at eight bits. At budget 64 the detector state estimate was roughly 3.8 kB for all methods, not a measured RSS or an ANN/model size. Dynamic detector allocation, temporary working memory, scheduling memory, and zero stored dataset memory are separate CSV columns.
+
+The paper method is a fuzzer, so train accuracy, test accuracy, exact-sample accuracy, and generalization gap do not exist here. The unexecuted domain is never used to select inputs; it is not a test set for a predictor. The outcome has three bits, but the primary metric is **exactly witnessed edges**, not bit accuracy. Likewise, no bug discovery, crash uniqueness, real-program coverage, or comparison with AFL was measured. Equation (2) misses XOR interactions by design: the exhaustive XOR control yielded zero edges despite algebraic dependence. This is a sensitivity limitation, not an implementation error.
+
+The confidence intervals quantify randomized trials on one fixed oracle, not uncertainty across target programs. The measured 8–12 bit scaling span is short, and outcome count also grows, so the timing trend cannot be extrapolated. The approximate state-size accounting depends on STL layout. No formal theorem follows from these experiments; an exhaustive check on finite oracles and repeated randomized observations are experimental evidence, whereas a formal proof would establish a claim for its stated class of programs and assumptions.
